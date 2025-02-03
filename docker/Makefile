@@ -28,4 +28,4 @@ exec-php:
 	$(DOCKER_COMPOSE) exec $(PHP_SERVICE) bash
 
 exec-node:
-	$(DOCKER_COMPOSE) exec $(NODE_SERVICE) bashe
+	$(DOCKER_COMPOSE) exec $(NODE_SERVICE) bash
