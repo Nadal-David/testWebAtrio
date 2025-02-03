@@ -29,3 +29,7 @@ exec-php:
 
 exec-node:
 	$(DOCKER_COMPOSE) exec $(NODE_SERVICE) bash
+
+start-front:
+	@echo "Démarrage du frontend Angular..."
+	$(DOCKER_COMPOSE) exec $(NODE_SERVICE) npx ng serve --host 0.0.0.0 --port 4200
