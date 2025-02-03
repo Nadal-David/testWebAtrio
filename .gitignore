@@ -1,0 +1,13 @@
+back/var/
+back/vendor/
+back/node_modules/
+back/public/build/
+back/public/assets
+
+back/.idea/
+/back/.vscode/
+
+back/log/
+/back/.cache/
+
+back/.env.dev

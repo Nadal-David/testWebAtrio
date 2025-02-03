@@ -24,8 +24,8 @@ build-restart:
 	make build
 	make start
 
-php:
+exec-php:
 	$(DOCKER_COMPOSE) exec $(PHP_SERVICE) bash
 
-node:
-	$(DOCKER_COMPOSE) exec $(NODE_SERVICE) bash
+exec-node:
+	$(DOCKER_COMPOSE) exec $(NODE_SERVICE) bashe
