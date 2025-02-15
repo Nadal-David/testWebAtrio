@@ -1,9 +1,257 @@
 nelmio_api_doc:
-    documentation:
-        info:
-            title: My App
-            description: This is an awesome app!
-            version: 1.0.0
-    areas: # to filter documented areas
-        path_patterns:
-            - ^/api(?!/doc$) # Accepts routes under /api except /api/doc
+  documentation:
+    info:
+      title: "API test WebAtrio"
+      description: "API pour gérer des personnes et des emplois."
+      version: "1.0.0"
+    paths:
+      /api/personne/new:
+        post:
+          summary: "Créer une nouvelle personne"
+          description: |
+            Cette route permet de créer une nouvelle personne en fournissant un nom, un prénom et une date de naissance.
+            La date de naissance doit être valide et l'âge calculé ne doit pas dépasser 150 ans.
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    nom:
+                      type: string
+                      description: "Le nom de la personne"
+                    prenom:
+                      type: string
+                      description: "Le prénom de la personne"
+                    dateNaissance:
+                      type: string
+                      format: date
+                      description: "La date de naissance de la personne (format YYYY-MM-DD)"
+          responses:
+            '200':
+              description: "Personne créée avec succès"
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+            '400':
+              description: "Erreur liée aux paramètres de la requête (par exemple, paramètres manquants ou format incorrect)"
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      errors:
+                        type: array
+                        items:
+                          type: string
+      /api/personne/all:
+        get:
+          summary: "Récupérer toutes les personnes"
+          description: "Cette route permet de récupérer la liste de toutes les personnes enregistrées."
+          responses:
+            '200':
+              description: "Liste des personnes"
+              content:
+                application/json:
+                  schema:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        nom:
+                          type: string
+                        prenom:
+                          type: string
+                        dateNaissance:
+                          type: string
+                          format: date
+      /api/personne/all/{nomEntreprise}:
+        get:
+          summary: "Récupérer les personnes d'une entreprise"
+          description: "Cette route permet de récupérer la liste des personnes associées à une entreprise donnée."
+          parameters:
+            - in: path
+              name: nomEntreprise
+              required: true
+              description: "Le nom de l'entreprise pour laquelle récupérer les personnes"
+              schema:
+                type: string
+          responses:
+            '200':
+              description: "Liste des personnes pour l'entreprise spécifiée"
+              content:
+                application/json:
+                  schema:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                        nom:
+                          type: string
+                        prenom:
+                          type: string
+                        dateNaissance:
+                          type: string
+                          format: date
+                          /api/emploi/add/{idPersonne}:
+                            post:
+                              summary: "Ajouter un emploi pour une personne"
+                              description: |
+                                Cette route permet d'ajouter un emploi pour une personne en spécifiant un nom d'entreprise, un poste, une date de début, et une date de fin facultative.
+                                La personne doit exister dans la base de données.
+                              parameters:
+                                - in: path
+                                  name: idPersonne
+                                  required: true
+                                  description: "ID de la personne à laquelle l'emploi doit être ajouté"
+                                  schema:
+                                    type: integer
+                              requestBody:
+                                required: true
+                                content:
+                                  application/json:
+                                    schema:
+                                      type: object
+                                      properties:
+                                        nomEntreprise:
+                                          type: string
+                                          description: "Le nom de l'entreprise où la personne travaille"
+                                        poste:
+                                          type: string
+                                          description: "Le poste occupé par la personne"
+                                        dateDebut:
+                                          type: string
+                                          format: date
+                                          description: "La date de début de l'emploi"
+                                        dateFin:
+                                          type: string
+                                          format: date
+                                          description: "La date de fin de l'emploi (optionnelle)"
+                              responses:
+                                '200':
+                                  description: "Emploi ajouté avec succès"
+                                  content:
+                                    application/json:
+                                      schema:
+                                        type: object
+                                        properties:
+                                          code:
+                                            type: integer
+                                          message:
+                                            type: string
+                                '400':
+                                  description: "Erreur liée aux paramètres de la requête (par exemple, paramètres manquants ou format incorrect)"
+                                  content:
+                                    application/json:
+                                      schema:
+                                        type: object
+                                        properties:
+                                          code:
+                                            type: integer
+                                          message:
+                                            type: string
+                                          errors:
+                                            type: array
+                                            items:
+                                              type: string
+                                '404':
+                                  description: "Personne non trouvée"
+                                  content:
+                                    application/json:
+                                      schema:
+                                        type: object
+                                        properties:
+                                          code:
+                                            type: integer
+                                          message:
+                                            type: string
+      /api/emploi/add/{idPersonne}:
+        post:
+          summary: "Ajouter un emploi pour une personne"
+          description: |
+            Cette route permet d'ajouter un emploi pour une personne en spécifiant un nom d'entreprise, un poste, une date de début, et une date de fin facultative.
+            La personne doit exister dans la base de données.
+          parameters:
+            - in: path
+              name: idPersonne
+              required: true
+              description: "ID de la personne à laquelle l'emploi doit être ajouté"
+              schema:
+                type: integer
+          requestBody:
+            required: true
+            content:
+              application/json:
+                schema:
+                  type: object
+                  properties:
+                    nomEntreprise:
+                      type: string
+                      description: "Le nom de l'entreprise où la personne travaille"
+                    poste:
+                      type: string
+                      description: "Le poste occupé par la personne"
+                    dateDebut:
+                      type: string
+                      format: date
+                      description: "La date de début de l'emploi"
+                    dateFin:
+                      type: string
+                      format: date
+                      description: "La date de fin de l'emploi (optionnelle)"
+          responses:
+            '200':
+              description: "Emploi ajouté avec succès"
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+            '400':
+              description: "Erreur liée aux paramètres de la requête (par exemple, paramètres manquants ou format incorrect)"
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: string
+                      errors:
+                        type: array
+                        items:
+                          type: string
+            '404':
+              description: "Personne non trouvée"
+              content:
+                application/json:
+                  schema:
+                    type: object
+                    properties:
+                      code:
+                        type: integer
+                      message:
+                        type: str
+  areas: # to filter documented areas
+    path_patterns:
+      - ^/api(?!/doc$) # Accepts routes under /api except /api/doc

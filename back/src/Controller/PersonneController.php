@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\DTO\NewPersonneRequestDTO;
-use App\Entity\Emploi;
 use App\Enum\ResponseCodeEnum;
 use App\Enum\ResponsemessageEnum;
 use App\Service\PersonneService;
