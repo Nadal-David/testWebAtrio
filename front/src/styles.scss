@@ -1,1 +1,68 @@
-/* You can add global styles to this file, and also import other style files */
+@use "@angular/material" as mat;
+@use "sass:map";
+
+html {
+  @include mat.theme(
+      (
+        color: mat.$azure-palette,
+        typography: Roboto,
+      )
+  );
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background-color: map.get(mat.$azure-palette, 90);
+}
+
+.toolbar-content {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  text-transform: uppercase;
+  font-weight: 500 !important;
+  color: map.get(mat.$azure-palette, 30) !important;
+}
+
+.container-fluid {
+  width: 100%;
+  padding: 0 16px;
+  box-sizing: border-box;
+}
+
+.mt-10 {
+  margin-top: 10px !important;
+}
+
+.me-10 {
+  margin-right: 10px !important;
+}
+
+@media (min-width: 576px) {
+  .container-fluid {
+    padding: 0 24px;
+  }
+}
+
+@media (min-width: 768px) {
+  .container-fluid {
+    padding: 0 32px;
+  }
+}
+
+@media (min-width: 992px) {
+  .container-fluid {
+    padding: 0 48px;
+  }
+}
+
+@media (min-width: 1200px) {
+  .container-fluid {
+    padding: 0 64px;
+  }
+}

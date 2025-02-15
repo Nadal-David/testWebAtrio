@@ -1,0 +1,53 @@
+<div class="mat-app-background basic-container mt-10">
+  <table mat-table [dataSource]="personnes">
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef> ID </th>
+      <td mat-cell *matCellDef="let personne"> {{personne.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="nom">
+      <th mat-header-cell *matHeaderCellDef> Nom </th>
+      <td mat-cell *matCellDef="let personne"> {{personne.nom}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="prenom">
+      <th mat-header-cell *matHeaderCellDef> Prénom </th>
+      <td mat-cell *matCellDef="let personne"> {{personne.prenom}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="emploisActuels">
+      <th mat-header-cell *matHeaderCellDef> Emplois Actuels </th>
+      <td mat-cell *matCellDef="let personne">
+        <table mat-table [dataSource]="personne.emploisActuels">
+          <ng-container matColumnDef="nomEntreprise">
+            <th mat-header-cell *matHeaderCellDef> Entreprise </th>
+            <td mat-cell *matCellDef="let emploi"> {{emploi.nomEntreprise}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="poste">
+            <th mat-header-cell *matHeaderCellDef> Poste </th>
+            <td mat-cell *matCellDef="let emploi"> {{emploi.poste}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="dateDebut">
+            <th mat-header-cell *matHeaderCellDef> Date de Début </th>
+            <td mat-cell *matCellDef="let emploi"> {{emploi.dateDebut.date | date: 'shortDate'}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="dateFin">
+            <th mat-header-cell *matHeaderCellDef> Date de Fin </th>
+            <td mat-cell *matCellDef="let emploi">
+              {{ emploi.dateFin !== null ? (emploi.dateFin.date | date: 'shortDate') : 'Non définie' }}
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="['nomEntreprise', 'poste', 'dateDebut', 'dateFin']"></tr>
+          <tr mat-row *matRowDef="let row; columns: ['nomEntreprise', 'poste', 'dateDebut', 'dateFin'];"></tr>
+        </table>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="['id', 'nom', 'prenom', 'emploisActuels']"></tr>
+    <tr mat-row *matRowDef="let row; columns: ['id', 'nom', 'prenom', 'emploisActuels'];"></tr>
+  </table>
+</div>

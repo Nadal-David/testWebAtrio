@@ -1,0 +1,42 @@
+<form [formGroup]="emploisForm" (ngSubmit)="submitForm()" class="mt-10">
+  <mat-form-field appearance="fill">
+    <mat-label>Personne</mat-label>
+    <mat-select formControlName="personne">
+      <mat-option *ngFor="let personne of personnes" [value]="personne.id">
+        {{ personne.nom }} {{ personne.prenom }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Nom de l'entreprise</mat-label>
+    <input matInput formControlName="nomEntreprise">
+    <mat-error *ngIf="emploisForm.get('nomEntreprise')?.hasError('required')">
+      Le nom entreprise est obligatoire
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Poste</mat-label>
+    <input matInput formControlName="poste">
+    <mat-error *ngIf="emploisForm.get('poste')?.hasError('required')">
+      Le poste est obligatoire
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Date de début</mat-label>
+    <input matInput [matDatepicker]="picker" formControlName="dateDebut">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Date de fin</mat-label>
+    <input matInput [matDatepicker]="pickerFin" formControlName="dateFin">
+    <mat-datepicker-toggle matSuffix [for]="pickerFin"></mat-datepicker-toggle>
+    <mat-datepicker #pickerFin></mat-datepicker>
+  </mat-form-field>
+
+  <button mat-raised-button type="submit">Ajouter l'emploi</button>
+</form>

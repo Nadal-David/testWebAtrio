@@ -34,6 +34,10 @@ class EmploiController extends AbstractController
             ]);
         }
 
+        if (isset($data['dateFin']) && $data['dateFin'] === '') {
+            $data['dateFin'] = null;
+        }
+
         $personne = $personneService->getPersonne($idPersonne);
 
         if (!$personne instanceof Personne) {

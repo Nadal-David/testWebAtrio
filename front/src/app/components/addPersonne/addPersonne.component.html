@@ -1,0 +1,31 @@
+<form [formGroup]="personneForm" (ngSubmit)="submitForm()" class="mt-10">
+  <mat-form-field appearance="fill">
+    <mat-label>Nom</mat-label>
+    <input matInput placeholder="Entrez votre nom" formControlName="nom">
+    <mat-error *ngIf="personneForm.get('nom')?.hasError('required')">
+      Le nom est obligatoire
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Prénom</mat-label>
+    <input matInput placeholder="Entrez votre prénom" formControlName="prenom">
+    <mat-error *ngIf="personneForm.get('prenom')?.hasError('required')">
+      Le prénom est obligatoire
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Date de naissance</mat-label>
+    <input matInput [matDatepicker]="picker" placeholder="Choisir une date" formControlName="dateNaissance" [max]="maxDate" [min]="minDate">
+    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+    <mat-datepicker #picker></mat-datepicker>
+    <mat-error *ngIf="personneForm.get('dateNaissance')?.hasError('required')">
+      La date de naissance est obligatoire
+    </mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="personneForm.invalid">
+    Envoyer
+  </button>
+</form>
